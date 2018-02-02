@@ -37,11 +37,11 @@ portal:
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
 
-DownloadPageUrl: http:192.168.0.46:8087/app#
+DownloadPageUrl: https://download.juphoon.com/download.html#
 
 
 server:
-  port: 8087
+  port: 8083
   #port: 8089
   context-path: /app
 

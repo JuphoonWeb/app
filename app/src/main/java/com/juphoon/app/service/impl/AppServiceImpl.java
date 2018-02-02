@@ -38,11 +38,15 @@ public class AppServiceImpl implements AppService {
     public List<App> getApps(String downloadPageUrlSuffix, String versionCode) {
 
         List<App> appList = appMapper.getAppList(downloadPageUrlSuffix);
+        if(versionCode==null)
+            return  appList;
+
         for (int i = 0; i < appList.size(); i++) {
             App app = appList.get(i);
             if (app.getVersionCode() == versionCode || versionCode.equals(app.getVersionCode())) {
                 appList.remove(app);
                 appList.add(0, app);
+                break;
             }
         }
         return appList;
