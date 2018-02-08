@@ -18,6 +18,15 @@ public interface AppMapper {
 
     int updateByPrimaryKey(App record);
 
-    List<App> getAppList(@Param("downloadPageUrlSuffix") String downloadPageUrlSuffix);
-    App getIOSApp(@Param("downloadPageUrlSuffix") String downloadPageUrlSuffix);
+    List<App> getAppList(@Param("userId") Integer userId,@Param("appName") String appName);
+
+    App selectByAppName(@Param("appName")String appName);
+
+//
+//
+
+//
+//    App1 getLatestApp(@Param("appId") String appId);
+//
+//
 }

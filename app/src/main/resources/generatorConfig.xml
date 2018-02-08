@@ -21,7 +21,7 @@
         </jdbcConnection>
         -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://192.168.0.46:3306/capdeveloper_test"
+                        connectionURL="jdbc:mysql://192.168.0.46:3306/app_package_manage"
                         userId="root"
                         password="juphoon419708">
         </jdbcConnection>
@@ -45,7 +45,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table schema="mybatis" tableName="app_install_package_test" domainObjectName="App"
+        <table schema="mybatis" tableName="app_install_package_version" domainObjectName="AppVersion"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableSelectByExample="false"

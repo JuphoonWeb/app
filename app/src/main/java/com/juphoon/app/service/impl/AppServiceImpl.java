@@ -7,7 +7,11 @@ import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.juphoon.app.entity.App;
+import com.juphoon.app.entity.AppVersion;
+import com.juphoon.app.entity.vo.LatestVersionVo;
+import com.juphoon.app.exception.BusinessException;
 import com.juphoon.app.mapper.AppMapper;
+import com.juphoon.app.mapper.AppVersionMapper;
 import com.juphoon.app.service.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,40 +26,76 @@ public class AppServiceImpl implements AppService {
     @Autowired
     private AppMapper appMapper;
 
+    @Autowired
+    private AppVersionMapper appVersionMapper;
+
     @Value("${DownloadPageUrl}")
     private String DownloadPageUrl;
 
-
     @Override
     @Transactional
-    public PageInfo<App> getAppList(Integer page, Integer size) {
+    public PageInfo<App> getAppList(Integer page, Integer size, String appName) {
         PageHelper.startPage(page, size);
-        List<App> appList = appMapper.getAppList(null);
+        List<App> appList = appMapper.getAppList(null, "%" + appName + "%");
         return new PageInfo<>(appList);
     }
 
     @Override
-    public List<App> getApps(String downloadPageUrlSuffix, String versionCode) {
+    public PageInfo<App> getAppListByUserId(Integer page, Integer size, Integer userId, String appName) {
 
-        List<App> appList = appMapper.getAppList(downloadPageUrlSuffix);
-        if(versionCode==null)
-            return  appList;
-
-        for (int i = 0; i < appList.size(); i++) {
-            App app = appList.get(i);
-            if (app.getVersionCode() == versionCode || versionCode.equals(app.getVersionCode())) {
-                appList.remove(app);
-                appList.add(0, app);
-                break;
-            }
-        }
-        return appList;
+        PageHelper.startPage(page, size);
+        List<App> appList = appMapper.getAppList(userId, appName);
+        return new PageInfo<>(appList);
     }
 
     @Override
-    public App getIOSAPP(String downloadPageUrlSuffix) {
+    public PageInfo<LatestVersionVo> getVersionList(Integer page, Integer size, Integer appId) {
+        PageHelper.startPage(page, size);
+        List<LatestVersionVo> appList = appVersionMapper.getVersionList(appId);
+        return new PageInfo<>(appList);
+    }
 
-        return appMapper.getIOSApp(downloadPageUrlSuffix);
+    @Override
+    public AppVersion getVersionDetail(Integer id) {
+        return appVersionMapper.selectByPrimaryKey(id);
+    }
+
+    //更新版本信息
+    @Override
+    public void updateAppVersion(AppVersion appVersion) {
+
+        appVersionMapper.updateByPrimaryKeySelective(appVersion);
+    }
+
+    //更新最新的版本信息
+    @Override
+    public LatestVersionVo getLatestAppVersion(Integer appId, Integer appType) {
+
+        return appVersionMapper.getLatestAppVersion(appId, appType);
+    }
+
+    //获取versionCode为第一位的版本信息列表
+    @Override
+    public List<LatestVersionVo> getAppVersions(String suffix, String versionCode) {
+
+        List<LatestVersionVo> versionVoList = appVersionMapper.getAppVersions(suffix);
+        for (int i = 0; i < versionVoList.size(); i++) {
+            LatestVersionVo version = versionVoList.get(i);
+            if (version.getVersionCode() == versionCode || versionCode.equals(version.getVersionCode())) {
+                versionVoList.remove(version);
+                versionVoList.add(0, version);
+                break;
+            }
+        }
+        return versionVoList;
+    }
+
+
+    //根据后缀获取最新的版本信息
+    @Override
+    public LatestVersionVo getIOSAPP(String downloadPageUrlSuffix) {
+
+        return appVersionMapper.getIOSApp(downloadPageUrlSuffix);
     }
 
 
@@ -63,9 +103,10 @@ public class AppServiceImpl implements AppService {
     @Transactional
     public void addApp(App app) throws PinyinException {
 
-        app.setCreateTime(new Date());
-        app.setChangeTime(new Date());
-        app.setFileSize(convertFileSize(Long.parseLong(app.getFileSize())));
+        if (appMapper.selectByAppName(app.getAppName()) != null) {
+            throw new BusinessException("应用名已存在");
+        }
+
         if (app.getAppPassword() == null || "".equals(app.getAppPassword())) {
             app.setAppEnablePassword(0);
         } else {
@@ -77,20 +118,40 @@ public class AppServiceImpl implements AppService {
             downloadPageUrlSuffix = tranAppName + "-android";
         } else if (app.getAppType() == 1) {
             downloadPageUrlSuffix = tranAppName + "-ios";
-            String downloadFileUrl = app.getDownloadFileUrl();
-            app.setDownloadFileUrl(downloadFileUrl.replace("http://rcs.wo.cn:8083", "https://rcs.wo.cn"));
         } else {
             downloadPageUrlSuffix = tranAppName + "-window";
         }
         app.setDownloadPageUrlSuffix(downloadPageUrlSuffix);
         app.setDownloadPageUrl(DownloadPageUrl + downloadPageUrlSuffix);
+        app.setCreateTime(new Date());
         appMapper.insertSelective(app);
     }
 
     @Override
     @Transactional
+    public void addVersion(AppVersion appVersion) {
+
+        App app = appMapper.selectByPrimaryKey(appVersion.getAppId());
+        if (app.getAppType() == 1) {
+            String downloadFileUrl = appVersion.getDownloadFileUrl();
+            appVersion.setDownloadFileUrl(downloadFileUrl.replace("http://rcs.wo.cn:8083", "https://rcs.wo.cn"));
+            appVersion.setLogUrl(appVersion.getLogUrl().replace("http://rcs.wo.cn:8083", "https://rcs.wo.cn"));
+        }
+        appVersion.setFileSize(convertFileSize(Long.parseLong(appVersion.getFileSize())));
+        appVersion.setCreateTime(new Date());
+        appVersion.setChangeTime(new Date());
+        appVersionMapper.insertSelective(appVersion);
+
+    }
+
+
+    //删除应用及版本信息
+    @Override
+    @Transactional
     public void delApp(Integer id) {
         appMapper.deleteByPrimaryKey(id);
+        appVersionMapper.deleteByAppId(id);
+
     }
 
     public static String convertFileSize(long size) {
