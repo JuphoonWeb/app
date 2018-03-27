@@ -1,7 +1,6 @@
 package com.juphoon.app.entity.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -31,14 +30,16 @@ public class LatestVersionVo {
 
     private String downloadPageUrl;
 
+    private String downloadPageUrlSuffix;
+
     private Integer mandatoryUpdate;
 
-    private String downloadPageUrlSuffix;
+    private String reportUrl;
 
     public LatestVersionVo() {
     }
 
-    public LatestVersionVo(Integer id, String versionName, String versionCode, String updateInstructions, String logUrl, String downloadFileUrl, Date createTime, Date changeTime, String appName, Integer appType, String appId, String downloadPageUrl, Integer mandatoryUpdate, String downloadPageUrlSuffix) {
+    public LatestVersionVo(Integer id, String versionName, String versionCode, String updateInstructions, String logUrl, String downloadFileUrl, Date createTime, Date changeTime, String appName, Integer appType, String appId, String downloadPageUrl, String downloadPageUrlSuffix, Integer mandatoryUpdate, String reportUrl) {
         this.id = id;
         this.versionName = versionName;
         this.versionCode = versionCode;
@@ -51,8 +52,9 @@ public class LatestVersionVo {
         this.appType = appType;
         this.appId = appId;
         this.downloadPageUrl = downloadPageUrl;
-        this.mandatoryUpdate = mandatoryUpdate;
         this.downloadPageUrlSuffix = downloadPageUrlSuffix;
+        this.mandatoryUpdate = mandatoryUpdate;
+        this.reportUrl = reportUrl;
     }
 
     public Integer getId() {
@@ -151,6 +153,14 @@ public class LatestVersionVo {
         this.downloadPageUrl = downloadPageUrl;
     }
 
+    public String getDownloadPageUrlSuffix() {
+        return downloadPageUrlSuffix;
+    }
+
+    public void setDownloadPageUrlSuffix(String downloadPageUrlSuffix) {
+        this.downloadPageUrlSuffix = downloadPageUrlSuffix;
+    }
+
     public Integer getMandatoryUpdate() {
         return mandatoryUpdate;
     }
@@ -159,12 +169,12 @@ public class LatestVersionVo {
         this.mandatoryUpdate = mandatoryUpdate;
     }
 
-    public String getDownloadPageUrlSuffix() {
-        return downloadPageUrlSuffix;
+    public String getReportUrl() {
+        return reportUrl;
     }
 
-    public void setDownloadPageUrlSuffix(String downloadPageUrlSuffix) {
-        this.downloadPageUrlSuffix = downloadPageUrlSuffix;
+    public void setReportUrl(String reportUrl) {
+        this.reportUrl = reportUrl;
     }
 
     @Override
@@ -182,8 +192,9 @@ public class LatestVersionVo {
                 ", appType=" + appType +
                 ", appId='" + appId + '\'' +
                 ", downloadPageUrl='" + downloadPageUrl + '\'' +
-                ", mandatoryUpdate=" + mandatoryUpdate +
                 ", downloadPageUrlSuffix='" + downloadPageUrlSuffix + '\'' +
+                ", mandatoryUpdate=" + mandatoryUpdate +
+                ", reportUrl='" + reportUrl + '\'' +
                 '}';
     }
 }

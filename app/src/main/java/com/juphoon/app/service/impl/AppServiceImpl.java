@@ -29,11 +29,11 @@ public class AppServiceImpl implements AppService {
     @Autowired
     private AppVersionMapper appVersionMapper;
 
+
     @Value("${DownloadPageUrl}")
     private String DownloadPageUrl;
 
     @Override
-    @Transactional
     public PageInfo<App> getAppList(Integer page, Integer size, String appName) {
         PageHelper.startPage(page, size);
         List<App> appList = appMapper.getAppList(null, "%" + appName + "%");
@@ -62,16 +62,10 @@ public class AppServiceImpl implements AppService {
 
     //更新版本信息
     @Override
+    @Transactional
     public void updateAppVersion(AppVersion appVersion) {
 
         appVersionMapper.updateByPrimaryKeySelective(appVersion);
-    }
-
-    //更新最新的版本信息
-    @Override
-    public LatestVersionVo getLatestAppVersion(Integer appId, Integer appType) {
-
-        return appVersionMapper.getLatestAppVersion(appId, appType);
     }
 
     //获取versionCode为第一位的版本信息列表
@@ -90,6 +84,18 @@ public class AppServiceImpl implements AppService {
         return versionVoList;
     }
 
+    @Override
+    @Transactional
+    public void delVersion(Integer id) {
+        appVersionMapper.delVersion(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateReportUrl(Integer id, String reportUrl) {
+        appVersionMapper.updateReportUrl(id,reportUrl);
+    }
+
 
     //根据后缀获取最新的版本信息
     @Override
@@ -103,7 +109,7 @@ public class AppServiceImpl implements AppService {
     @Transactional
     public void addApp(App app) throws PinyinException {
 
-        if (appMapper.selectByAppName(app.getAppName()) != null) {
+        if (appMapper.selectByAppName(app.getAppName(),app.getAppType()) != null) {
             throw new BusinessException("应用名已存在");
         }
 
@@ -140,10 +146,10 @@ public class AppServiceImpl implements AppService {
         appVersion.setFileSize(convertFileSize(Long.parseLong(appVersion.getFileSize())));
         appVersion.setCreateTime(new Date());
         appVersion.setChangeTime(new Date());
+        appVersion.setStatus(1);
         appVersionMapper.insertSelective(appVersion);
 
     }
-
 
     //删除应用及版本信息
     @Override
@@ -151,7 +157,6 @@ public class AppServiceImpl implements AppService {
     public void delApp(Integer id) {
         appMapper.deleteByPrimaryKey(id);
         appVersionMapper.deleteByAppId(id);
-
     }
 
     public static String convertFileSize(long size) {

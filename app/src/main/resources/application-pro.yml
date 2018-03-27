@@ -7,7 +7,7 @@ portal:
     datasource:
 
         portal: portal
-        url: jdbc:mysql://192.168.0.46:3306/app_package_manage?useUnicode=true&characterEncoding=UTF-8
+        url: jdbc:mysql://120.27.139.73:3306/app_package_manage?useUnicode=true&characterEncoding=UTF-8
         username: root
         password: juphoon419708
         # 使用druid数据源
@@ -39,9 +39,10 @@ portal:
 
 DownloadPageUrl: https://download.juphoon.com/download.html#
 
+
 spring:
     redis:
-      host: 192.168.0.46
+      host: 127.0.0.1
       port: 6379
       password: juphoon419708
       timeout: 0

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class AppVersion implements Serializable {
-
     private Integer id;
 
     private String versionName;
@@ -25,9 +24,15 @@ public class AppVersion implements Serializable {
 
     private Date changeTime;
 
+    private Integer status;
+
+    private Integer mandatoryUpdate;
+
+    private String reportUrl;
+
     private static final long serialVersionUID = 1L;
 
-    public AppVersion(Integer id, String versionName, String versionCode, String updateInstructions, String fileSize, String logUrl, String downloadFileUrl, Integer appId, Date createTime, Date changeTime) {
+    public AppVersion(Integer id, String versionName, String versionCode, String updateInstructions, String fileSize, String logUrl, String downloadFileUrl, Integer appId, Date createTime, Date changeTime, Integer status, Integer mandatoryUpdate, String reportUrl) {
         this.id = id;
         this.versionName = versionName;
         this.versionCode = versionCode;
@@ -38,6 +43,9 @@ public class AppVersion implements Serializable {
         this.appId = appId;
         this.createTime = createTime;
         this.changeTime = changeTime;
+        this.status = status;
+        this.mandatoryUpdate = mandatoryUpdate;
+        this.reportUrl = reportUrl;
     }
 
     public AppVersion() {
@@ -124,6 +132,30 @@ public class AppVersion implements Serializable {
         this.changeTime = changeTime;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getMandatoryUpdate() {
+        return mandatoryUpdate;
+    }
+
+    public void setMandatoryUpdate(Integer mandatoryUpdate) {
+        this.mandatoryUpdate = mandatoryUpdate;
+    }
+
+    public String getReportUrl() {
+        return reportUrl;
+    }
+
+    public void setReportUrl(String reportUrl) {
+        this.reportUrl = reportUrl == null ? null : reportUrl.trim();
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -145,7 +177,10 @@ public class AppVersion implements Serializable {
                 && (this.getDownloadFileUrl() == null ? other.getDownloadFileUrl() == null : this.getDownloadFileUrl().equals(other.getDownloadFileUrl()))
                 && (this.getAppId() == null ? other.getAppId() == null : this.getAppId().equals(other.getAppId()))
                 && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-                && (this.getChangeTime() == null ? other.getChangeTime() == null : this.getChangeTime().equals(other.getChangeTime()));
+                && (this.getChangeTime() == null ? other.getChangeTime() == null : this.getChangeTime().equals(other.getChangeTime()))
+                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+                && (this.getMandatoryUpdate() == null ? other.getMandatoryUpdate() == null : this.getMandatoryUpdate().equals(other.getMandatoryUpdate()))
+                && (this.getReportUrl() == null ? other.getReportUrl() == null : this.getReportUrl().equals(other.getReportUrl()));
     }
 
     @Override
@@ -162,6 +197,9 @@ public class AppVersion implements Serializable {
         result = prime * result + ((getAppId() == null) ? 0 : getAppId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getChangeTime() == null) ? 0 : getChangeTime().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getMandatoryUpdate() == null) ? 0 : getMandatoryUpdate().hashCode());
+        result = prime * result + ((getReportUrl() == null) ? 0 : getReportUrl().hashCode());
         return result;
     }
 
@@ -181,6 +219,9 @@ public class AppVersion implements Serializable {
         sb.append(", appId=").append(appId);
         sb.append(", createTime=").append(createTime);
         sb.append(", changeTime=").append(changeTime);
+        sb.append(", status=").append(status);
+        sb.append(", mandatoryUpdate=").append(mandatoryUpdate);
+        sb.append(", reportUrl=").append(reportUrl);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

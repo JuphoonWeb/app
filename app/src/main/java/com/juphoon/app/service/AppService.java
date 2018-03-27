@@ -29,7 +29,11 @@ public interface AppService {
 
     void updateAppVersion(AppVersion appVersion);
 
-    LatestVersionVo getLatestAppVersion(Integer appId, Integer appType);
+   // LatestVersionVo getLatestAppVersion(Integer appId, Integer appType);
 
     List<LatestVersionVo> getAppVersions(String suffix, String versionCode);
+
+    void delVersion(Integer id);
+
+    void updateReportUrl(Integer id, String reportUrl);
 }

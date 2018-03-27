@@ -14,8 +14,6 @@ public class App implements Serializable {
 
     private String downloadPageUrl;
 
-    private Integer mandatoryUpdate;
-
     private Date createTime;
 
     private Integer appEnablePassword;
@@ -28,13 +26,12 @@ public class App implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public App(Integer id, String appName, Integer appType, String appId, String downloadPageUrl, Integer mandatoryUpdate, Date createTime, Integer appEnablePassword, String appPassword, Integer userId, String downloadPageUrlSuffix) {
+    public App(Integer id, String appName, Integer appType, String appId, String downloadPageUrl, Date createTime, Integer appEnablePassword, String appPassword, Integer userId, String downloadPageUrlSuffix) {
         this.id = id;
         this.appName = appName;
         this.appType = appType;
         this.appId = appId;
         this.downloadPageUrl = downloadPageUrl;
-        this.mandatoryUpdate = mandatoryUpdate;
         this.createTime = createTime;
         this.appEnablePassword = appEnablePassword;
         this.appPassword = appPassword;
@@ -84,14 +81,6 @@ public class App implements Serializable {
 
     public void setDownloadPageUrl(String downloadPageUrl) {
         this.downloadPageUrl = downloadPageUrl == null ? null : downloadPageUrl.trim();
-    }
-
-    public Integer getMandatoryUpdate() {
-        return mandatoryUpdate;
-    }
-
-    public void setMandatoryUpdate(Integer mandatoryUpdate) {
-        this.mandatoryUpdate = mandatoryUpdate;
     }
 
     public Date getCreateTime() {
@@ -151,7 +140,6 @@ public class App implements Serializable {
                 && (this.getAppType() == null ? other.getAppType() == null : this.getAppType().equals(other.getAppType()))
                 && (this.getAppId() == null ? other.getAppId() == null : this.getAppId().equals(other.getAppId()))
                 && (this.getDownloadPageUrl() == null ? other.getDownloadPageUrl() == null : this.getDownloadPageUrl().equals(other.getDownloadPageUrl()))
-                && (this.getMandatoryUpdate() == null ? other.getMandatoryUpdate() == null : this.getMandatoryUpdate().equals(other.getMandatoryUpdate()))
                 && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
                 && (this.getAppEnablePassword() == null ? other.getAppEnablePassword() == null : this.getAppEnablePassword().equals(other.getAppEnablePassword()))
                 && (this.getAppPassword() == null ? other.getAppPassword() == null : this.getAppPassword().equals(other.getAppPassword()))
@@ -168,7 +156,6 @@ public class App implements Serializable {
         result = prime * result + ((getAppType() == null) ? 0 : getAppType().hashCode());
         result = prime * result + ((getAppId() == null) ? 0 : getAppId().hashCode());
         result = prime * result + ((getDownloadPageUrl() == null) ? 0 : getDownloadPageUrl().hashCode());
-        result = prime * result + ((getMandatoryUpdate() == null) ? 0 : getMandatoryUpdate().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getAppEnablePassword() == null) ? 0 : getAppEnablePassword().hashCode());
         result = prime * result + ((getAppPassword() == null) ? 0 : getAppPassword().hashCode());
@@ -188,7 +175,6 @@ public class App implements Serializable {
         sb.append(", appType=").append(appType);
         sb.append(", appId=").append(appId);
         sb.append(", downloadPageUrl=").append(downloadPageUrl);
-        sb.append(", mandatoryUpdate=").append(mandatoryUpdate);
         sb.append(", createTime=").append(createTime);
         sb.append(", appEnablePassword=").append(appEnablePassword);
         sb.append(", appPassword=").append(appPassword);

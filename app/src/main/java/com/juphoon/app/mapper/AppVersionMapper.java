@@ -21,11 +21,13 @@ public interface AppVersionMapper {
 
     List<LatestVersionVo> getVersionList(@Param("appId") Integer appId);
 
-    LatestVersionVo getLatestAppVersion(@Param("appId") Integer appId, @Param("appType") Integer appType);
-
     LatestVersionVo getIOSApp(@Param("downloadPageUrlSuffix") String downloadPageUrlSuffix);
 
     List<LatestVersionVo> getAppVersions(@Param("suffix") String suffix);
 
     int deleteByAppId(@Param("appId") Integer appId);
+
+    void delVersion(@Param("id") Integer id);
+
+    void updateReportUrl(@Param("id") Integer id,@Param("reportUrl") String reportUrl);
 }
