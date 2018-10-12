@@ -19,7 +19,7 @@ public interface AppService {
 
     void addVersion(AppVersion appVersion);
 
-    LatestVersionVo getIOSAPP(String downloadPageUrlSuffix);
+    LatestVersionVo getIOSAPP(String downloadPageUrlSuffix, String versionCode);
 
     PageInfo<App> getAppListByUserId(Integer page, Integer size, Integer userId,String appName);
 

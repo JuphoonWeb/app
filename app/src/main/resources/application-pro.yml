@@ -39,6 +39,9 @@ portal:
 
 DownloadPageUrl: https://download.juphoon.com/download.html#
 
+appFilePath: /home/SDKCapOpen/apk/
+
+appDownloadUrl: https://download.juphoon.com/apk/
 
 spring:
     redis:

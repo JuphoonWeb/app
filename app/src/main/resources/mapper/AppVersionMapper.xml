@@ -205,7 +205,7 @@
     SELECT a.id,a.version_name,a.version_code,a.update_instructions,a.log_url,a.download_file_url,a.create_time,a.change_time,a.report_url,b.app_name,b.app_type,b.app_id,b.download_page_url,b.mandatory_update,b.download_page_url_suffix,b.mandatory_update
     FROM app_install_package_version as a
     LEFT JOIN app_install_package b  on a.app_id=b.id
-    where  b.download_page_url_suffix =#{downloadPageUrlSuffix}  AND  a.status=1
+    where  b.download_page_url_suffix =#{downloadPageUrlSuffix}  AND a.version_code = #{versionCode} a.status=1
     GROUP BY  a.change_time DESC LIMIT 1
 
   </select>

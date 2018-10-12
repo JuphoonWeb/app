@@ -27,7 +27,7 @@ public class LoginController extends BaseController {
     private JedisUtils jedisUtils;
 
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/user_login", method = RequestMethod.POST)
     public ServerResponse login(String username, String password) throws Exception {
 
         if (username == null || "".equals(username)) {
@@ -56,7 +56,6 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    @ResponseBody
     public Object loginout(HttpServletRequest request) {
         String uuid = request.getHeader("token");
         if (uuid == null) {

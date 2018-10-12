@@ -21,7 +21,7 @@ public interface AppVersionMapper {
 
     List<LatestVersionVo> getVersionList(@Param("appId") Integer appId);
 
-    LatestVersionVo getIOSApp(@Param("downloadPageUrlSuffix") String downloadPageUrlSuffix);
+    LatestVersionVo getIOSApp(@Param("downloadPageUrlSuffix") String downloadPageUrlSuffix, @Param("versionCode") String versionCode);
 
     List<LatestVersionVo> getAppVersions(@Param("suffix") String suffix);
 

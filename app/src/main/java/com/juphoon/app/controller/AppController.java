@@ -27,7 +27,6 @@ import java.util.Map;
  * Created by Juphoon on 2018/1/3.
  */
 @RestController
-@RequestMapping
 public class AppController {
 
     @Autowired
@@ -127,8 +126,8 @@ public class AppController {
     @RequestMapping(value = "/getLatestApp", method = RequestMethod.GET)
     public ServerResponse getLatestApp(Integer appId,Integer appType) {
 
-        LatestVersionVo latestVersion = appService.getLatestAppVersion(appId,appType);
-        return ServerResponse.success(latestVersion);
+        //LatestVersionVo latestVersion = appService.getLatestAppVersion(appId,appType);
+        return null;
 
     }
 
@@ -141,10 +140,10 @@ public class AppController {
     }
 
 
-    @RequestMapping("/{suffix}/mainflist")
-    public void mainflist(HttpServletResponse response, @PathVariable String suffix) throws IOException {
+    @RequestMapping("/{suffix}/{versionCode}/mainflist")
+    public void mainflist(HttpServletResponse response, @PathVariable String suffix, @PathVariable String versionCode) throws IOException {
         response.setCharacterEncoding("UTF-8");
-        LatestVersionVo installPackage = appService.getIOSAPP(suffix);
+        LatestVersionVo installPackage = appService.getIOSAPP(suffix, versionCode);
         if (installPackage != null) {
             response.getWriter().write(getPlist(installPackage));
         }

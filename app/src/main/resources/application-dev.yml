@@ -39,6 +39,10 @@ portal:
 
 DownloadPageUrl: https://download.juphoon.com/download.html#
 
+appFilePath: /Users/cynic/java-soft
+
+appDownloadUrl: https://download.juphoon.com/apk/
+
 spring:
     redis:
       host: 192.168.0.46
@@ -49,13 +53,16 @@ spring:
         max-idle: 8
         max-wait: -1
         max-active: 8
+    http:
+      multipart:
+        max-file-size: 300Mb
+        max-request-size: 300Mb
 
 
 server:
   port: 8083
   #port: 8089
   context-path: /app
-
 
 
 

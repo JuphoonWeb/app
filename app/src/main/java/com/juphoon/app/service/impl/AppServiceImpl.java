@@ -99,9 +99,9 @@ public class AppServiceImpl implements AppService {
 
     //根据后缀获取最新的版本信息
     @Override
-    public LatestVersionVo getIOSAPP(String downloadPageUrlSuffix) {
+    public LatestVersionVo getIOSAPP(String downloadPageUrlSuffix, String versionCode) {
 
-        return appVersionMapper.getIOSApp(downloadPageUrlSuffix);
+        return appVersionMapper.getIOSApp(downloadPageUrlSuffix, versionCode);
     }
 
 
